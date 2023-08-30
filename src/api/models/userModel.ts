@@ -33,17 +33,9 @@ const getUser = async (userId: string): Promise<User> => {
 
 // TODO: create addUser function
 const addUser = async (data: PostUser): Promise<number> => {
-  const [headers] = await promisePool.execute<ResultSetHeader>(
-    `
-    INSERT INTO sssf_user (user_name, email, password, role)
-    VALUES (?, ?, ?, ?)
-    `,
-    [data.user_name, data.email, data.password, data.role]
-  );
-  if (headers.affectedRows === 0) {
-    throw new CustomError('No users added', 400);
-  }
-  console.log(headers.info);
+  const sql = promisePool.format('INSERT INTO sssf_user SET ?;', [data]);
+
+  const [headers] = await promisePool.execute<ResultSetHeader>(sql);
   return headers.insertId;
 };
 

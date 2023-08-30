@@ -47,7 +47,11 @@ const catGet = async (req: Request, res: Response, next: NextFunction) => {
 // catPost should use req.file to get filename
 // catPost should use res.locals.coords to get lat and lng (see middlewares.ts)
 // catPost should use req.user to get user_id and role
-const catPost = async (req: Request, res: Response, next: NextFunction) => {
+const catPost = async (
+  req: Request<{}, {}, PostCat>,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const messages: string = errors
@@ -61,10 +65,10 @@ const catPost = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const cat = req.body;
-    cat.filename = req.file?.filename;
-    cat.lat = res.locals.coords.lat;
-    cat.lng = res.locals.coords.lng;
-    cat.owner = (req.user as User).user_id;
+    cat.filename = req.file?.filename as string;
+    cat.lat = res.locals.coords[0];
+    cat.lng = res.locals.coords[1];
+    cat.owner = (req.user as User).user_id as User['user_id'];
     const id = await addCat(cat);
     if (id) {
       const message: MessageResponse = {

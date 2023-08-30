@@ -91,7 +91,7 @@ const updateCat = async (
   if (headers.affectedRows === 0) {
     throw new CustomError('No cats updated', 400);
   }
-  return headers.insertId;
+  return catId;
 };
 
 const deleteCat = async (catId: number): Promise<boolean> => {
