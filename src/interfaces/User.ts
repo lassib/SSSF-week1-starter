@@ -11,7 +11,7 @@ interface User {
 interface GetUser extends RowDataPacket, User {}
 
 // TODO create interface or type PostUser that extends User but without id
-interface PostUser extends RowDataPacket, User {
+interface PostUser extends User {
   user_name: string;
   email: string;
   role: 'user' | 'admin';
@@ -19,7 +19,7 @@ interface PostUser extends RowDataPacket, User {
 }
 
 // TODO create interface or type PutUser that extends PostUser but all properties are optional
-interface PutUser extends Partial<User> {
+interface PutUser extends Partial<PostUser> {
   user_name?: string;
   email?: string;
   role?: 'user' | 'admin';

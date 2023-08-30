@@ -34,7 +34,6 @@ const getUser = async (userId: string): Promise<User> => {
 // TODO: create addUser function
 const addUser = async (data: PostUser): Promise<number> => {
   const sql = promisePool.format('INSERT INTO sssf_user SET ?;', [data]);
-
   const [headers] = await promisePool.execute<ResultSetHeader>(sql);
   return headers.insertId;
 };

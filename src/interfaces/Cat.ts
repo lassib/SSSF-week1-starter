@@ -16,7 +16,7 @@ interface Cat {
 interface GetCat extends RowDataPacket, Cat {}
 
 // TODO: create PostCat interface or type. Same as cat but without id
-interface PostCat extends RowDataPacket, Cat {
+interface PostCat extends Cat {
   cat_name: string;
   weight: number;
   filename: string;
@@ -27,7 +27,7 @@ interface PostCat extends RowDataPacket, Cat {
 }
 
 // TODO: create PutCat interface or type. Sameas PostCat but properties are optional
-interface PutCat extends Partial<Cat> {
+interface PutCat extends Partial<PostCat> {
   cat_name?: string;
   weight?: number;
   filename?: string;
